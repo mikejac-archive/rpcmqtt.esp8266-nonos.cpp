@@ -197,6 +197,40 @@ AccThermostat* NewAccThermostat(const char* name,
 
 ///
 
+#define AccProgrammableSwitchOutputStateSetValue(a, v)       UInt8SetValue((a)->StatefulProgrammableSwitch->ProgrammableSwitchOutputState->UInt8, (v))
+#define AccProgrammableSwitchOutputStateGetValue(a)          ((a)->StatefulProgrammableSwitch->ProgrammableSwitchOutputState->UInt8->Value->UInt8)
+
+#define AccProgrammableSwitchEventSetValue(a, v)            UInt8SetValue((a)->StatefulProgrammableSwitch->ProgrammableSwitchEvent->UInt8, (v))
+#define AccProgrammableSwitchEventGetValue(a)               ((a)->StatefulProgrammableSwitch->ProgrammableSwitchEvent->UInt8->Value->UInt8)
+
+#define AccProgrammableSwitchOutputStateIid                  9
+
+typedef struct {
+    Accessory*                  Accessory;
+    
+    StatefulProgrammableSwitch* StatefulProgrammableSwitch;
+} AccStatefulProgrammableSwitch;
+/**
+ * 
+ * @param name
+ * @param serialnumber
+ * @param manufacturer
+ * @param model
+ * @param state
+ * @param min
+ * @param max
+ * @return 
+ */
+AccStatefulProgrammableSwitch* NewAccStatefulProgrammableSwitch(const char* name, 
+                                                                const char* serialnumber, 
+                                                                const char* manufacturer, 
+                                                                const char* model,
+                                                                uint8_t     state,
+                                                                uint8_t     min,
+                                                                uint8_t     max);
+
+///
+
 #define AccTextSetValue(a, v)   StringSetValue((a)->Text->Version->String, (v))
 
 typedef struct {

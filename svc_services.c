@@ -347,6 +347,87 @@ defer:
  * 
  * @return 
  */
+StatefulProgrammableSwitch* ICACHE_FLASH_ATTR NewStatefulProgrammableSwitch(void)
+{
+    StatefulProgrammableSwitch* svc = (StatefulProgrammableSwitch*) os_zalloc(sizeof(StatefulProgrammableSwitch));
+    if(svc == 0) {
+        DTXT("NewStatefulProgrammableSwitch(StatefulProgrammableSwitch): mem fail\n");
+        return 0;
+    }
+
+    svc->Service = NewService(TypeStatefulProgrammableSwitch);
+    if(svc->Service == 0) {
+        DTXT("NewStatefulProgrammableSwitch(Service): mem fail\n");
+        goto defer;
+    }
+
+    svc->ProgrammableSwitchEvent = NewProgrammableSwitchEvent();
+    if(svc->ProgrammableSwitchEvent == 0) {
+        DTXT("NewStatefulProgrammableSwitch(ProgrammableSwitchEvent): mem fail\n");
+        goto defer;
+    }
+    
+    svc->ProgrammableSwitchOutputState = NewProgrammableSwitchOutputState();
+    if(svc->ProgrammableSwitchOutputState == 0) {
+        DTXT("NewStatefulProgrammableSwitch(ProgrammableSwitchOutputState): mem fail\n");
+        goto defer;
+    }
+
+    AddCharacteristic(svc->Service, svc->ProgrammableSwitchEvent->UInt8);
+    AddCharacteristic(svc->Service, svc->ProgrammableSwitchOutputState->UInt8);
+
+    return svc;
+    
+defer:
+    if(svc->Service != 0) {
+        os_free(svc->Service);
+    }
+    if(svc != 0) {
+        os_free(svc);
+    }
+    return 0;
+}
+/**
+ * 
+ * @return 
+ */
+StatelessProgrammableSwitch* ICACHE_FLASH_ATTR NewStatelessProgrammableSwitch(void)
+{
+    StatelessProgrammableSwitch* svc = (StatelessProgrammableSwitch*) os_zalloc(sizeof(StatelessProgrammableSwitch));
+    if(svc == 0) {
+        DTXT("NewStatelessProgrammableSwitch(StatelessProgrammableSwitch): mem fail\n");
+        return 0;
+    }
+
+    svc->Service = NewService(TypeStatelessProgrammableSwitch);
+    if(svc->Service == 0) {
+        DTXT("NewStatelessProgrammableSwitch(Service): mem fail\n");
+        goto defer;
+    }
+
+    svc->ProgrammableSwitchEvent = NewProgrammableSwitchEvent();
+    if(svc->ProgrammableSwitchEvent == 0) {
+        DTXT("NewStatelessProgrammableSwitch(ProgrammableSwitchEvent): mem fail\n");
+        goto defer;
+    }
+    
+    AddCharacteristic(svc->Service, svc->ProgrammableSwitchEvent->UInt8);
+
+    return svc;
+    
+defer:
+    if(svc->Service != 0) {
+        os_free(svc->Service);
+    }
+    if(svc != 0) {
+        os_free(svc);
+    }
+    return 0;
+}
+/**
+ * 
+ * @return 
+ */
 Text* ICACHE_FLASH_ATTR NewText(void)
 {
     Text* svc = (Text*) os_zalloc(sizeof(Text));

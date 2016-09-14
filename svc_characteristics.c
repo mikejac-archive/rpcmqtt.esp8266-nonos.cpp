@@ -431,6 +431,48 @@ Version* ICACHE_FLASH_ATTR NewVersion(void)
     
     return c;
 }
+/**
+ * 
+ * @return 
+ */
+ProgrammableSwitchEvent* ICACHE_FLASH_ATTR NewProgrammableSwitchEvent(void)
+{
+    ProgrammableSwitchEvent* c = (ProgrammableSwitchEvent*) os_zalloc(sizeof(ProgrammableSwitchEvent));
+    if(c == 0) {
+        return 0;
+    }
+    
+    c->UInt8 = NewUInt8(TypeProgrammableSwitchEvent);
+    c->UInt8->Perms = PermsRead();
+
+    UInt8SetMinValue(c->UInt8, 0);
+    UInt8SetMaxValue(c->UInt8, 1);
+    UInt8SetStepValue(c->UInt8, 1);
+    UInt8SetValue(c->UInt8, 0);
+    
+    return c;
+}
+/**
+ * 
+ * @return 
+ */
+ProgrammableSwitchOutputState* ICACHE_FLASH_ATTR NewProgrammableSwitchOutputState(void)
+{
+    ProgrammableSwitchOutputState* c = (ProgrammableSwitchOutputState*) os_zalloc(sizeof(ProgrammableSwitchOutputState));
+    if(c == 0) {
+        return 0;
+    }
+    
+    c->UInt8 = NewUInt8(TypeProgrammableSwitchOutputState);
+    c->UInt8->Perms = PermsAll();
+
+    UInt8SetMinValue(c->UInt8, 0);
+    UInt8SetMaxValue(c->UInt8, 1);
+    UInt8SetStepValue(c->UInt8, 1);
+    UInt8SetValue(c->UInt8, 0);
+    
+    return c;
+}
 
 /******************************************************************************************************************
  * base functions

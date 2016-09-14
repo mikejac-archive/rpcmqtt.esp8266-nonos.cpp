@@ -301,6 +301,71 @@ defer:
  * @param serialnumber
  * @param manufacturer
  * @param model
+ * @param state
+ * @param min
+ * @param max
+ * @return 
+ */
+AccStatefulProgrammableSwitch* ICACHE_FLASH_ATTR NewAccStatefulProgrammableSwitch(  const char* name, 
+                                                                                    const char* serialnumber, 
+                                                                                    const char* manufacturer, 
+                                                                                    const char* model,
+                                                                                    uint8_t     state,
+                                                                                    uint8_t     min,
+                                                                                    uint8_t     max)
+{
+    AccStatefulProgrammableSwitch* acc = (AccStatefulProgrammableSwitch*) os_zalloc(sizeof(AccStatefulProgrammableSwitch));
+    if(acc == 0) {
+        DTXT("NewAccStatefulProgrammableSwitch(AccStatefulProgrammableSwitch): mem fail\n");
+        return 0;
+    }
+
+    acc->Accessory = NewAccessory(name, serialnumber, manufacturer, model, TypeAccProgrammableSwitch);
+    if(acc->Accessory == 0) {
+        DTXT("NewAccStatefulProgrammableSwitch(Accessory): mem fail\n");
+        goto defer;
+    }
+    
+    acc->StatefulProgrammableSwitch = NewStatefulProgrammableSwitch();
+    if(acc->StatefulProgrammableSwitch == 0) {
+        DTXT("NewAccStatefulProgrammableSwitch(StatefulProgrammableSwitch): mem fail\n");
+        goto defer;
+    }
+    
+    acc->StatefulProgrammableSwitch->Service->parent                              = acc->Accessory;
+    acc->StatefulProgrammableSwitch->ProgrammableSwitchEvent->UInt8->parent       = acc->StatefulProgrammableSwitch->Service;
+    acc->StatefulProgrammableSwitch->ProgrammableSwitchOutputState->UInt8->parent = acc->StatefulProgrammableSwitch->Service;
+    
+    UInt8SetMinValue(acc->StatefulProgrammableSwitch->ProgrammableSwitchEvent->UInt8, min);
+    UInt8SetMaxValue(acc->StatefulProgrammableSwitch->ProgrammableSwitchEvent->UInt8, max);
+    UInt8SetValue(acc->StatefulProgrammableSwitch->ProgrammableSwitchEvent->UInt8, state);
+
+    UInt8SetMinValue(acc->StatefulProgrammableSwitch->ProgrammableSwitchOutputState->UInt8, min);
+    UInt8SetMaxValue(acc->StatefulProgrammableSwitch->ProgrammableSwitchOutputState->UInt8, max);
+    UInt8SetValue(acc->StatefulProgrammableSwitch->ProgrammableSwitchOutputState->UInt8, state);
+
+    AddService(acc->Accessory, acc->StatefulProgrammableSwitch->Service);
+        
+    return acc;
+    
+defer:
+    if(acc->StatefulProgrammableSwitch != 0) {
+        os_free(acc->StatefulProgrammableSwitch);
+    }
+    if(acc->Accessory != 0) {
+        os_free(acc->Accessory);
+    }
+    if(acc != 0) {
+        os_free(acc);
+    }
+    return 0;
+}
+/**
+ * 
+ * @param name
+ * @param serialnumber
+ * @param manufacturer
+ * @param model
  * @param text
  * @return 
  */

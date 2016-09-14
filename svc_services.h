@@ -116,7 +116,34 @@ typedef struct {
  */
 Thermostat* NewThermostat(void);
 
-//
+///
+
+typedef struct {
+    Service*                        Service;
+
+    ProgrammableSwitchEvent*        ProgrammableSwitchEvent;
+    ProgrammableSwitchOutputState*  ProgrammableSwitchOutputState;
+} StatefulProgrammableSwitch;
+/**
+ * 
+ * @return 
+ */
+StatefulProgrammableSwitch* NewStatefulProgrammableSwitch(void);
+
+///
+
+typedef struct {
+    Service*                        Service;
+
+    ProgrammableSwitchEvent*        ProgrammableSwitchEvent;
+} StatelessProgrammableSwitch;
+/**
+ * 
+ * @return 
+ */
+StatelessProgrammableSwitch* NewStatelessProgrammableSwitch(void);
+
+///
 
 typedef struct {
     Service*        Service;

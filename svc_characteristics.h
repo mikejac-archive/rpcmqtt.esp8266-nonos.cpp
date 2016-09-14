@@ -273,6 +273,27 @@ typedef struct {
  */
 Version* NewVersion(void);
 
+///
+
+typedef struct {
+    Characteristic* UInt8;
+} ProgrammableSwitchEvent;
+/**
+ * 
+ * @return 
+ */
+ProgrammableSwitchEvent* NewProgrammableSwitchEvent(void);
+
+///
+
+typedef struct {
+    Characteristic* UInt8;
+} ProgrammableSwitchOutputState;
+/**
+ * 
+ * @return 
+ */
+ProgrammableSwitchOutputState* NewProgrammableSwitchOutputState(void);
 
 /******************************************************************************************************************
  * 

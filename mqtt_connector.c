@@ -1176,12 +1176,12 @@ defer:
 
             return;
         }
-    } else if(os_strcmp(platformId, PlatformIdChronos) == 0 && os_strcmp(serviceId, ServiceIdAnalogOut) == 0 && os_strcmp(feedId, FeedIdSeconds) == 0) {
+    } else if(os_strcmp(platformId, PlatformIdChronos) == 0 && os_strcmp(serviceId, ServiceIdChronos) == 0 && os_strcmp(feedId, FeedIdSeconds) == 0) {
         if(BMix_DecoderBegin((const char*)payload) != NULL) {
            const char* _type;
            uint64_t    val;
 
-           if(BMix_GetString("_type", &_type) == 0 && os_strcmp(_type, TaskIdAnalogWrite) == 0 && BMix_GetU64("value", &val) == 0) {
+           if(BMix_GetString("_type", &_type) == 0 && os_strcmp(_type, ServiceIdChronos) == 0 && BMix_GetU64("value", &val) == 0) {
                DTXT("onOfframpHandler(chronos): time set\n");
 
                esp_stime((esp_time_t*) &val);
@@ -1286,7 +1286,7 @@ void ICACHE_FLASH_ATTR chronosSubscribe(Mqtt* mqtt)
                                                             fabricTopicAny,             // actorPlatformID == senders platformId
                                                             fabricTopicAny,             // taskId 
                                                             PlatformIdChronos,          // platformId
-                                                            ServiceIdAnalogOut,         // serviceId
+                                                            ServiceIdChronos,           // serviceId
                                                             FeedIdSeconds,              // feedId
                                                             0));
     
@@ -1301,7 +1301,7 @@ void ICACHE_FLASH_ATTR chronosSubscribe(Mqtt* mqtt)
                             fabricTopicAny,             // actorPlatformID == senders platformId
                             fabricTopicAny,             // taskId 
                             PlatformIdChronos,          // platformId 
-                            ServiceIdAnalogOut,         // serviceId
+                            ServiceIdChronos,           // serviceId
                             FeedIdSeconds,              // feedId
                             topic);
     

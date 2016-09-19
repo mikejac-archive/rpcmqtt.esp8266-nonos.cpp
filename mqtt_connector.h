@@ -46,7 +46,7 @@ extern "C" {
  * common platform id's
  *
  */
-#define PlatformIdChronos               "chronos"
+#define PlatformIdChronos               "time"
 #define PlatformIdUpgrader              "esp8266upgrader"
 #define PlatformIdPackage               "esp8266package"
 
@@ -54,14 +54,12 @@ extern "C" {
  * common service id's
  *
  */
-#define ServiceIdAnalogOut              "analog_out"
-#define ServiceIdTime                   "time"
+#define ServiceIdChronos                "chronos"
 
 /******************************************************************************************************************
  * common task id's
  *
  */
-#define TaskIdAnalogWrite               "analog_write"
 
 /******************************************************************************************************************
  * common feed id's
